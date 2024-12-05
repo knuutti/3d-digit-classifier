@@ -1,0 +1,10 @@
+Required Python packages (install command with pip in parenthesis):
+- numpy (pip install numpy)
+- pandas (pip install pandas)
+- torch (pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118)
+- scipy (pip install scipy)
+
+Additional packages required for training and testing the model (NOT required for running digit_classify function):
+- sklearn (pip install -U scikit-learn)
+- matplotlib (pip install -U matplotlib)
+                                                                
