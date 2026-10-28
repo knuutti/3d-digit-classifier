@@ -3,19 +3,47 @@ In this project the goal was to design and train a classifier model for classify
 The dataset used for training and validation consists of 1000 strokes, 100 samples for each digit. Each stroke contains $N$ number of 3D data points, that
 together form the hand written stroke as a function of time.
 
-This project was done as a practical assignment for course *Pattern Recognition and Machine Learning* lectured in LUT University in Autumn 2024.
+**Context:** Practical assignment for the course *Pattern Recognition and Machine Learning*, LUT University, autumn 2024. Team: Eetu Knutars, Eetu Peltola and Veeti Rajaniemi.
 
 ## Model
 Our model is a multimodal neural network, where we use both individual numerical features of the data that are passed to a dense layer, and a 2D image projection that is passed to convolutional layer. 
-Our model achieved over 96% test accuracy on data that we did not have access to. During our own validation we got training accuracy as high as over 99% and test accuracy to 98%.
+The model achieved 96% accuracy on the course's held-out test data, which we did not have access to during development.
+
+![Confusion matrix](images/confusion_matrix.png)
+
+*Confusion matrix on our internal test split (15 strokes per digit), from the run saved in `classifier.ipynb`.*
 
 ## Requirements
-Required Python packages (install command with pip in parenthesis):
-- numpy (`pip install numpy`)
-- pandas (`pip install pandas`)
-- torch (`pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118`)
-- scipy (`pip install scipy`)
+Install the required packages with:
 
-Additional packages required for training and testing the model (NOT required for running digit_classify function):
-- sklearn (`pip install -U scikit-learn`)
-- matplotlib (`pip install -U matplotlib`)
+```
+pip install -r requirements.txt
+```
+
+For GPU support, install PyTorch with CUDA first, e.g.:
+
+```
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+```
+
+## How to run
+`digit_classify` takes an Nx3 NumPy array (one stroke of 3D points) and returns the predicted digit (0–9). Run from the repository root, since the trained weights are loaded from `best_model.pth`:
+
+```python
+import pandas as pd
+from digit_classify import digit_classify
+
+data = pd.read_csv('stroke.csv').to_numpy()  # Nx3 array of 3D points
+print(digit_classify(data))
+```
+
+The training dataset is not included in this repository.
+
+## Files
+- `digit_classify.py` – the `digit_classify` function
+- `classifier.py` – preprocessing, feature extraction, image creation, model and training code
+- `classifier.ipynb` – the same pipeline as a notebook, with training and test output
+- `best_model.pth` – trained model weights
+
+## License
+MIT, see [LICENSE](LICENSE).
